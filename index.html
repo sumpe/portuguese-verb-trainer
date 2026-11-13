@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Treino de Verbos Portugueses do Peter 🍪</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f7f4;--card:#ffffff;--text:#14231a;--muted:#587061;--line:#d1ddd4;
+  --accent:#046a38;--accent-text:#ffffff;--red:#c8281b;--ok:#046a38;--okbg:#e1f3e8;--bad:#c8281b;--badbg:#fdeae8;
+  color-scheme:light;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1712;--card:#18221b;--text:#e8f0ea;--muted:#9bb0a2;--line:#2c3b31;
+    --accent:#3fb37a;--accent-text:#04170d;--red:#ff7a6e;--ok:#6fd19a;--okbg:#153324;--bad:#ff8a7f;--badbg:#3e1f1c;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1712;--card:#18221b;--text:#e8f0ea;--muted:#9bb0a2;--line:#2c3b31;
+  --accent:#3fb37a;--accent-text:#04170d;--red:#ff7a6e;--ok:#6fd19a;--okbg:#153324;--bad:#ff8a7f;--badbg:#3e1f1c;
+  color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:520px;margin:0 auto;padding:28px 16px 48px}
+h1{font:600 1.7rem/1.2 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 22px;font-size:.95rem}
+.flag{position:relative;height:12px;border-radius:6px;margin-bottom:20px;background:linear-gradient(90deg,#046a38 40%,#da291c 40%)}
+.flag::after{content:"";position:absolute;left:40%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#ffe000;border:4px solid var(--bg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
+.lbl{display:block;font-weight:600;margin-bottom:8px}
+.seg{display:flex;gap:8px;margin-bottom:22px}
+.seg button{flex:1;padding:12px;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:10px;font:inherit;font-size:1.1rem;cursor:pointer}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
+.seg.tight{margin-bottom:8px}
+.hint{color:var(--muted);font-size:.85rem;margin:0 0 22px}
+.switch{display:flex;align-items:center;gap:12px;margin-bottom:16px;cursor:pointer;position:relative}
+#start{margin-top:10px}
+.switch input{position:absolute;opacity:0;width:44px;height:26px;margin:0;cursor:pointer}
+.track{width:44px;height:26px;border-radius:13px;background:var(--line);position:relative;flex:none;transition:background .15s}
+.track::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.switch input:checked+.track{background:var(--accent)}
+.switch input:checked+.track::after{left:21px}
+.switch input:focus-visible+.track{outline:2px solid var(--accent);outline-offset:2px}
+button{font-family:inherit}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.primary{width:100%;padding:14px;border:0;border-radius:10px;background:var(--accent);color:var(--accent-text);font-size:1.05rem;font-weight:600;cursor:pointer}
+.ghost{width:100%;padding:12px;margin-top:10px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--text);font-size:1rem;cursor:pointer}
+.top{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;margin-bottom:8px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:26px}
+#fill{height:100%;width:0;background:var(--accent);transition:width .25s}
+.verb{font:600 3rem/1.1 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;text-align:center}
+.tense{display:table;margin:10px auto 0;padding:4px 14px;border:1px solid var(--red);border-radius:999px;color:var(--red);font-weight:600}
+.who{text-align:center;color:var(--muted);margin:8px 0 22px;font-size:1.05rem}
+#ans{width:100%;padding:14px;font:inherit;font-size:1.3rem;text-align:center;border:2px solid var(--line);border-radius:10px;background:transparent;color:var(--text)}
+#ans:focus{outline:none;border-color:var(--accent)}
+#ans.ok{border-color:var(--ok);background:var(--okbg)}
+#ans.bad{border-color:var(--bad);background:var(--badbg)}
+.fb{margin:12px 0 0;padding:10px 12px;border-radius:8px;text-align:center;font-weight:600;white-space:pre-line}
+.fb.ok{background:var(--okbg);color:var(--ok)}
+.fb.bad{background:var(--badbg);color:var(--bad)}
+#go{margin-top:16px}
+#res{font:600 3rem/1.1 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;text-align:center}
+#pct{text-align:center;color:var(--muted);margin:4px 0 20px}
+#misshead{font-weight:600;margin:0 0 6px}
+#miss{margin:0 0 22px;padding-left:20px}
+#miss li{margin-bottom:6px}
+.link{display:inline-block;margin:4px 0;color:var(--accent);font-weight:600;text-decoration:underline}
+#setup .link{display:block;text-align:center;margin-top:16px}
+.chips{flex-wrap:wrap}
+.seg.chips{margin:14px 0}
+.chips button{flex:0 0 auto;padding:8px 14px;font-size:1rem}
+#tables h2{font:600 1.4rem/1.2 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;margin:14px 0 4px}
+.tw{overflow-x:auto}
+.tw+.hint{margin-top:12px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:.95rem}
+th,td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--line)}
+td:first-child{color:var(--muted);white-space:nowrap}
+th.pt,td.pt{background:rgba(32,160,96,.14);border-left:2px solid var(--line)}
+th.es,td.es{background:rgba(242,194,0,.2)}
+.tg td{font-weight:600;color:var(--text);background:var(--bg);padding-top:12px}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.hero{position:relative;overflow:hidden;color:#fff;padding:36px 0 92px;background:linear-gradient(160deg,#08803f 0%,#046a38 50%,#03472a 100%)}
+.hero::before{content:"";position:absolute;right:-56px;top:-56px;width:200px;height:200px;border-radius:50%;border:20px solid #ffe000;opacity:.9}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:linear-gradient(90deg,transparent 40%,#da291c 40%)}
+.hero .in{position:relative;max-width:520px;margin:0 auto;padding:0 20px}
+.hero h1{font:800 clamp(1.7rem,7vw,2.3rem)/1.08 "Plus Jakarta Sans",system-ui,sans-serif;letter-spacing:-.02em;margin:0;padding-right:72px}
+.hero .sub{color:rgba(255,255,255,.85);margin:12px 0 0}
+main{margin:-56px auto 0;padding:0 16px 48px;position:relative}
+.card,#tables{background:var(--card);border:0;border-radius:24px;padding:24px 20px;box-shadow:0 12px 32px rgba(3,71,42,.14),0 2px 6px rgba(0,0,0,.05)}
+.seg button{border:0;border-radius:999px;background:var(--bg);font-weight:600}
+.seg button.on{background:var(--accent);color:var(--accent-text);box-shadow:0 4px 12px rgba(4,106,56,.3)}
+.switch{padding:12px 14px;border:1px solid var(--line);border-radius:16px}
+.switch input{left:14px;top:50%;margin-top:-13px}
+.primary{border-radius:999px;padding:16px;font-weight:700;box-shadow:0 8px 20px rgba(4,106,56,.28);transition:transform .1s}
+.primary:active{transform:scale(.985)}
+.ghost{border-radius:999px}
+#setup .link{display:block;text-align:center;margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:999px;text-decoration:none}
+#tables .link{padding:8px 16px;border-radius:999px;background:var(--bg);text-decoration:none;margin:0 0 6px}
+.verb{font:800 3.4rem/1 "Plus Jakarta Sans",system-ui,sans-serif;letter-spacing:-.03em}
+.tense{background:#da291c;border-color:#da291c;color:#fff;padding:5px 16px}
+.who{font-weight:600}
+#ans{border-radius:16px;background:var(--bg);border-color:transparent;font-weight:700}
+.bar{height:8px;border-radius:4px}
+#fill{border-radius:4px}
+.fb{border-radius:12px}
+#res{font:800 3.6rem/1 "Plus Jakarta Sans",system-ui,sans-serif;letter-spacing:-.03em;color:var(--accent)}
+#tables h2{font:800 1.5rem/1.2 "Plus Jakarta Sans",system-ui,sans-serif;letter-spacing:-.02em}
+.tw{border:1px solid var(--line);border-radius:14px}
+table{border:0}
+.tg td{border-left:4px solid #da291c}
+.who{margin:8px 0 12px}
+.tense.sj{background:#ffe000;border-color:#ffe000;color:#3b3000}
+.tg.sj td{border-left-color:#f2c200}
+.pgrid{display:grid;grid-template-columns:repeat(2,26px);grid-auto-rows:19px;width:max-content;margin:0 auto 22px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.pgrid i{position:relative;border:0 solid var(--line)}
+.pgrid i:nth-child(odd){border-right-width:1px}
+.pgrid i:nth-child(n+3){border-top-width:1px}
+.pgrid i.on::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent)}
+table{border-collapse:separate;border-spacing:0}
+th.vh{text-align:center;font-weight:800;border-left:2px solid var(--line)}
+thead tr:nth-child(2) th{font-size:.8rem;color:var(--muted);text-align:center}
+th:first-child{position:sticky;left:0;z-index:2;background:var(--card)}
+tbody tr:not(.tg) td:first-child{position:sticky;left:0;z-index:1;background:var(--card)}
+.tl{display:inline-block;position:sticky;left:10px}
+main.wide{max-width:1100px}
+.gl{flex:0 0 100%;font-size:.8rem;font-weight:700;color:var(--muted);margin-top:6px}
+.leg{font-size:.85rem;color:var(--muted);margin:0 0 12px}
+.u{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.u.st{text-decoration-color:#3b82f6}
+.u.en{text-decoration-color:#ef4444}
+.u.ac{text-decoration-color:#a855f7;text-decoration-style:dotted}
+</style>
+</head>
+<body>
+<header class="hero"><div class="in">
+  <h1>Treino de Verbos Portugueses do Peter 🍪</h1>
+  <p class="sub" id="sub">Português europeu. Escreve a forma verbal; os acentos contam.</p>
+</div></header>
+<main>
+
+  <section id="setup" class="card">
+    <span class="lbl">Número de formas</span>
+    <div class="seg" id="seg">
+      <button data-v="10" aria-pressed="false">10</button>
+      <button data-v="20" class="on" aria-pressed="true">20</button>
+      <button data-v="30" aria-pressed="false">30</button>
+    </div>
+    <span class="lbl">Verbos</span>
+    <div class="seg chips tight" id="kinds"></div>
+    <p class="hint">Regulares: muitos verbos em -ar, -er e -ir. Essenciais: ser, estar, ter, haver, pôr, ir. Frequentes: fazer, dizer, dar, ver, vir, poder, querer, saber. Complementares: trazer, ler, sair, ouvir, pedir, dormir.</p>
+    <label class="switch">
+      <input type="checkbox" id="vos" checked>
+      <span class="track"></span>
+      <span>Incluir formas de <i>vós</i> (2.ª pl.)</span>
+    </label>
+    <label class="switch">
+      <input type="checkbox" id="syn">
+      <span class="track"></span>
+      <span>Só formas sintéticas (sem futuro nem condicional)</span>
+    </label>
+    <button class="primary" id="start">Começar</button>
+    <a class="link" href="#tables">Ver as tabelas de verbos</a>
+  </section>
+
+  <section id="quiz" class="card" hidden>
+    <div class="top"><span id="prog"></span><span id="score"></span></div>
+    <div class="bar"><div id="fill"></div></div>
+    <div class="verb" id="verb"></div>
+    <div class="tense" id="tense"></div>
+    <div class="who" id="who"></div>
+    <div class="pgrid" id="pgrid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <input id="ans" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="A tua resposta">
+    <div id="fb" class="fb" hidden></div>
+    <button class="primary" id="go">Verificar</button>
+  </section>
+
+  <section id="done" class="card" hidden>
+    <div id="res"></div>
+    <div id="pct"></div>
+    <p id="misshead">Para rever</p>
+    <ul id="miss"></ul>
+    <button class="primary" id="again">Jogar outra vez</button>
+    <button class="ghost" id="change">Alterar opções</button>
+  </section>
+
+  <section id="tables" hidden>
+    <a class="link" href="#game">Voltar ao jogo</a>
+    <h2>Tabelas de verbos</h2>
+    <p class="sub">Escolhe um ou mais verbos. Português europeu (PE) primeiro, espanhol (ES) depois.</p>
+    <div class="seg chips" id="vchips"></div>
+    <p class="leg">Nos verbos irregulares, sublinhado em relação ao verbo regular do mesmo tipo: <span class="u st">azul</span> = radical irregular; <span class="u en">vermelho</span> = terminação irregular (um traço vermelho no fim indica que falta a terminação regular, como em <i>faz</i>); <span class="u ac">roxo ponteado</span> = só o acento muda.</p>
+    <div class="tw"><table id="tbl"></table></div>
+    <p class="hint">O mais-que-perfeito simples português não tem equivalente em espanhol, que usa «había cantado». O imperfeito do conjuntivo espanhol tem duas formas (-ra / -se). O futuro do conjuntivo espanhol é arcaico e quase só aparece em textos jurídicos e literários.</p>
+    <a class="link" href="#game">Voltar ao jogo</a>
+  </section>
+</main>
+
+<script>
+const T=["Presente do indicativo","Pretérito perfeito","Pretérito imperfeito","Mais-que-perfeito simples","Futuro","Condicional","Presente do conjuntivo","Pretérito imperfeito do conjuntivo","Futuro do conjuntivo"];
+const P=[["eu","1.ª sing."],["tu","2.ª sing."],["ele / ela","3.ª sing."],["nós","1.ª pl."],["vós","2.ª pl."],["eles / elas","3.ª pl."]];
+const D={
+cantar:["canto cantas canta cantamos cantais cantam","cantei cantaste cantou cantámos/cantamos cantastes cantaram","cantava cantavas cantava cantávamos cantáveis cantavam","cantara cantaras cantara cantáramos cantáreis cantaram","cantarei cantarás cantará cantaremos cantareis cantarão","cantaria cantarias cantaria cantaríamos cantaríeis cantariam","cante cantes cante cantemos canteis cantem","cantasse cantasses cantasse cantássemos cantásseis cantassem","cantar cantares cantar cantarmos cantardes cantarem"],
+comer:["como comes come comemos comeis comem","comi comeste comeu comemos comestes comeram","comia comias comia comíamos comíeis comiam","comera comeras comera comêramos comêreis comeram","comerei comerás comerá comeremos comereis comerão","comeria comerias comeria comeríamos comeríeis comeriam","coma comas coma comamos comais comam","comesse comesses comesse comêssemos comêsseis comessem","comer comeres comer comermos comerdes comerem"],
+abrir:["abro abres abre abrimos abris abrem","abri abriste abriu abrimos abristes abriram","abria abrias abria abríamos abríeis abriam","abrira abriras abrira abríramos abríreis abriram","abrirei abrirás abrirá abriremos abrireis abrirão","abriria abririas abriria abriríamos abriríeis abririam","abra abras abra abramos abrais abram","abrisse abrisses abrisse abríssemos abrísseis abrissem","abrir abrires abrir abrirmos abrirdes abrirem"],
+ser:["sou és é somos sois são","fui foste foi fomos fostes foram","era eras era éramos éreis eram","fora foras fora fôramos fôreis foram","serei serás será seremos sereis serão","seria serias seria seríamos seríeis seriam","seja sejas seja sejamos sejais sejam","fosse fosses fosse fôssemos fôsseis fossem","for fores for formos fordes forem"],
+estar:["estou estás está estamos estais estão","estive estiveste esteve estivemos estivestes estiveram","estava estavas estava estávamos estáveis estavam","estivera estiveras estivera estivéramos estivéreis estiveram","estarei estarás estará estaremos estareis estarão","estaria estarias estaria estaríamos estaríeis estariam","esteja estejas esteja estejamos estejais estejam","estivesse estivesses estivesse estivéssemos estivésseis estivessem","estiver estiveres estiver estivermos estiverdes estiverem"],
+ter:["tenho tens tem temos tendes têm","tive tiveste teve tivemos tivestes tiveram","tinha tinhas tinha tínhamos tínheis tinham","tivera tiveras tivera tivéramos tivéreis tiveram","terei terás terá teremos tereis terão","teria terias teria teríamos teríeis teriam","tenha tenhas tenha tenhamos tenhais tenham","tivesse tivesses tivesse tivéssemos tivésseis tivessem","tiver tiveres tiver tivermos tiverdes tiverem"],
+haver:["hei hás há havemos/hemos haveis/heis hão","houve houveste houve houvemos houvestes houveram","havia havias havia havíamos havíeis haviam","houvera houveras houvera houvéramos houvéreis houveram","haverei haverás haverá haveremos havereis haverão","haveria haverias haveria haveríamos haveríeis haveriam","haja hajas haja hajamos hajais hajam","houvesse houvesses houvesse houvéssemos houvésseis houvessem","houver houveres houver houvermos houverdes houverem"],
+"pôr":["ponho pões põe pomos pondes põem","pus puseste pôs pusemos pusestes puseram","punha punhas punha púnhamos púnheis punham","pusera puseras pusera puséramos puséreis puseram","porei porás porá poremos poreis porão","poria porias poria poríamos poríeis poriam","ponha ponhas ponha ponhamos ponhais ponham","pusesse pusesses pusesse puséssemos pusésseis pusessem","puser puseres puser pusermos puserdes puserem"],
+ir:["vou vais vai vamos ides vão","fui foste foi fomos fostes foram","ia ias ia íamos íeis iam","fora foras fora fôramos fôreis foram","irei irás irá iremos ireis irão","iria irias iria iríamos iríeis iriam","vá vás vá vamos vades vão","fosse fosses fosse fôssemos fôsseis fossem","for fores for formos fordes forem"],
+"fazer":["faço fazes faz fazemos fazeis fazem", "fiz fizeste fez fizemos fizestes fizeram", "fazia fazias fazia fazíamos fazíeis faziam", "fizera fizeras fizera fizéramos fizéreis fizeram", "farei farás fará faremos fareis farão", "faria farias faria faríamos faríeis fariam", "faça faças faça façamos façais façam", "fizesse fizesses fizesse fizéssemos fizésseis fizessem", "fizer fizeres fizer fizermos fizerdes fizerem"],
+"dizer":["digo dizes diz dizemos dizeis dizem", "disse disseste disse dissemos dissestes disseram", "dizia dizias dizia dizíamos dizíeis diziam", "dissera disseras dissera disséramos disséreis disseram", "direi dirás dirá diremos direis dirão", "diria dirias diria diríamos diríeis diriam", "diga digas diga digamos digais digam", "dissesse dissesses dissesse disséssemos dissésseis dissessem", "disser disseres disser dissermos disserdes disserem"],
+"dar":["dou dás dá damos dais dão", "dei deste deu demos destes deram", "dava davas dava dávamos dáveis davam", "dera deras dera déramos déreis deram", "darei darás dará daremos dareis darão", "daria darias daria daríamos daríeis dariam", "dê dês dê demos deis deem", "desse desses desse déssemos désseis dessem", "der deres der dermos derdes derem"],
+"ver":["vejo vês vê vemos vedes veem", "vi viste viu vimos vistes viram", "via vias via víamos víeis viam", "vira viras vira víramos víreis viram", "verei verás verá veremos vereis verão", "veria verias veria veríamos veríeis veriam", "veja vejas veja vejamos vejais vejam", "visse visses visse víssemos vísseis vissem", "vir vires vir virmos virdes virem"],
+"vir":["venho vens vem vimos vindes vêm", "vim vieste veio viemos viestes vieram", "vinha vinhas vinha vínhamos vínheis vinham", "viera vieras viera viéramos viéreis vieram", "virei virás virá viremos vireis virão", "viria virias viria viríamos viríeis viriam", "venha venhas venha venhamos venhais venham", "viesse viesses viesse viéssemos viésseis viessem", "vier vieres vier viermos vierdes vierem"],
+"poder":["posso podes pode podemos podeis podem", "pude pudeste pôde pudemos pudestes puderam", "podia podias podia podíamos podíeis podiam", "pudera puderas pudera pudéramos pudéreis puderam", "poderei poderás poderá poderemos podereis poderão", "poderia poderias poderia poderíamos poderíeis poderiam", "possa possas possa possamos possais possam", "pudesse pudesses pudesse pudéssemos pudésseis pudessem", "puder puderes puder pudermos puderdes puderem"],
+"querer":["quero queres quer queremos quereis querem", "quis quiseste quis quisemos quisestes quiseram", "queria querias queria queríamos queríeis queriam", "quisera quiseras quisera quiséramos quiséreis quiseram", "quererei quererás quererá quereremos querereis quererão", "quereria quererias quereria quereríamos quereríeis quereriam", "queira queiras queira queiramos queirais queiram", "quisesse quisesses quisesse quiséssemos quisésseis quisessem", "quiser quiseres quiser quisermos quiserdes quiserem"],
+"saber":["sei sabes sabe sabemos sabeis sabem", "soube soubeste soube soubemos soubestes souberam", "sabia sabias sabia sabíamos sabíeis sabiam", "soubera souberas soubera soubéramos soubéreis souberam", "saberei saberás saberá saberemos sabereis saberão", "saberia saberias saberia saberíamos saberíeis saberiam", "saiba saibas saiba saibamos saibais saibam", "soubesse soubesses soubesse soubéssemos soubésseis soubessem", "souber souberes souber soubermos souberdes souberem"],
+"trazer":["trago trazes traz trazemos trazeis trazem", "trouxe trouxeste trouxe trouxemos trouxestes trouxeram", "trazia trazias trazia trazíamos trazíeis traziam", "trouxera trouxeras trouxera trouxéramos trouxéreis trouxeram", "trarei trarás trará traremos trareis trarão", "traria trarias traria traríamos traríeis trariam", "traga tragas traga tragamos tragais tragam", "trouxesse trouxesses trouxesse trouxéssemos trouxésseis trouxessem", "trouxer trouxeres trouxer trouxermos trouxerdes trouxerem"],
+"ler":["leio lês lê lemos ledes leem", "li leste leu lemos lestes leram", "lia lias lia líamos líeis liam", "lera leras lera lêramos lêreis leram", "lerei lerás lerá leremos lereis lerão", "leria lerias leria leríamos leríeis leriam", "leia leias leia leiamos leiais leiam", "lesse lesses lesse lêssemos lêsseis lessem", "ler leres ler lermos lerdes lerem"],
+"sair":["saio sais sai saímos saís saem", "saí saíste saiu saímos saístes saíram", "saía saías saía saíamos saíeis saíam", "saíra saíras saíra saíramos saíreis saíram", "sairei sairás sairá sairemos saireis sairão", "sairia sairias sairia sairíamos sairíeis sairiam", "saia saias saia saiamos saiais saiam", "saísse saísses saísse saíssemos saísseis saíssem", "sair saíres sair sairmos sairdes saírem"],
+"ouvir":["ouço ouves ouve ouvimos ouvis ouvem", "ouvi ouviste ouviu ouvimos ouvistes ouviram", "ouvia ouvias ouvia ouvíamos ouvíeis ouviam", "ouvira ouviras ouvira ouvíramos ouvíreis ouviram", "ouvirei ouvirás ouvirá ouviremos ouvireis ouvirão", "ouviria ouvirias ouviria ouviríamos ouviríeis ouviriam", "ouça ouças ouça ouçamos ouçais ouçam", "ouvisse ouvisses ouvisse ouvíssemos ouvísseis ouvissem", "ouvir ouvires ouvir ouvirmos ouvirdes ouvirem"],
+"pedir":["peço pedes pede pedimos pedis pedem", "pedi pediste pediu pedimos pedistes pediram", "pedia pedias pedia pedíamos pedíeis pediam", "pedira pediras pedira pedíramos pedíreis pediram", "pedirei pedirás pedirá pediremos pedireis pedirão", "pediria pedirias pediria pediríamos pediríeis pediriam", "peça peças peça peçamos peçais peçam", "pedisse pedisses pedisse pedíssemos pedísseis pedissem", "pedir pedires pedir pedirmos pedirdes pedirem"],
+"dormir":["durmo dormes dorme dormimos dormis dormem", "dormi dormiste dormiu dormimos dormistes dormiram", "dormia dormias dormia dormíamos dormíeis dormiam", "dormira dormiras dormira dormíramos dormíreis dormiram", "dormirei dormirás dormirá dormiremos dormireis dormirão", "dormiria dormirias dormiria dormiríamos dormiríeis dormiriam", "durma durmas durma durmamos durmais durmam", "dormisse dormisses dormisse dormíssemos dormísseis dormissem", "dormir dormires dormir dormirmos dormirdes dormirem"]
+};
+
+const $=id=>document.getElementById(id);
+const norm=s=>s.trim().toLowerCase().normalize("NFC").replace(/\s+/g," ");
+const IDX=Object.create(null);
+const REGV={
+ar:["cantar","falar","andar","pensar","trabalhar","comprar","estudar","chamar","usar","esperar","ajudar","gostar","mostrar","ganhar","mandar","entrar","olhar","amar","levar","tomar","passar","deixar","lavar","tirar","acabar","parar","terminar","preparar","visitar","lembrar","mudar","morar","viajar","nadar","jantar"],
+er:["comer","beber","vender","correr","escrever","aprender","responder","esconder","prometer","temer","varrer","entender","defender","ofender","atender","dever","mexer","ceder"],
+ir:["partir","decidir","abrir","assistir","existir","insistir","admitir","permitir","unir","dividir","discutir","cumprir","aplaudir","persistir","resistir","omitir","emitir","imprimir","invadir"]
+};
+const EN={
+ar:["o as a amos ais am","ei aste ou ámos/amos astes aram","ava avas ava ávamos áveis avam","ara aras ara áramos áreis aram","","","e es e emos eis em","asse asses asse ássemos ásseis assem",""],
+er:["o es e emos eis em","i este eu emos estes eram","ia ias ia íamos íeis iam","era eras era êramos êreis eram","","","a as a amos ais am","esse esses esse êssemos êsseis essem",""],
+ir:["o es e imos is em","i iste iu imos istes iram","ia ias ia íamos íeis iam","ira iras ira íramos íreis iram","","","a as a amos ais am","isse isses isse íssemos ísseis issem",""]
+};
+const TL4="ei ás á emos eis ão".split(" "),TL5="ia ias ia íamos íeis iam".split(" "),TL8=["","es","","mos","des","em"];
+function conj(v){
+  const k=v.slice(-2),s=v.slice(0,-2);
+  const mk=(st,en)=>en.map(x=>x.split("/").map(y=>st+y).join("/")).join(" ");
+  return EN[k].map((e,t)=>t===4?mk(v,TL4):t===5?mk(v,TL5):t===8?mk(v,TL8):mk(s,e.split(" ")));
+}
+const shuf=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]];}return a;};
+const ALLV=Object.assign({},D);
+for(const c in REGV)REGV[c].forEach(v=>{if(!ALLV[v])ALLV[v]=conj(v);});
+for(const v in ALLV)ALLV[v].forEach((s,t)=>s.split(" ").forEach((f,p)=>f.split("/").forEach(x=>{const k=norm(x);(IDX[k]=IDX[k]||[]).push({v:v,t:t,p:p});})));
+const ORD=["1.ª","2.ª","3.ª"];
+function pers(ps){
+  const s=ps.filter(p=>p<3).map(p=>ORD[p]),pl=ps.filter(p=>p>=3).map(p=>ORD[p-3]);
+  return [s.length?s.join("/")+" sing.":"",pl.length?pl.join("/")+" pl.":""].filter(Boolean).join(" e ");
+}
+function info(g){
+  const m=IDX[g];if(!m)return "";
+  const k={};
+  m.forEach(x=>{const key=x.v+"|"+x.t;(k[key]=k[key]||{v:x.v,t:x.t,ps:[]}).ps.push(x.p);});
+  return Object.values(k).map(x=>x.v+", "+T[x.t].toLowerCase()+", "+pers(x.ps)).join("; ");
+}
+const REG=["cantar","comer","abrir"];
+let n=20,q=[],i=0,score=0,miss=[],phase="";
+const GR={reg:["cantar","comer","abrir"],ess:["ser","estar","ter","haver","pôr","ir"],fre:["fazer", "dizer", "dar", "ver", "vir", "poder", "querer", "saber"],com:["trazer", "ler", "sair", "ouvir", "pedir", "dormir"]};
+const GL={reg:"Regulares",ess:"Essenciais",fre:"Frequentes",com:"Complementares"};
+const GRP={};for(const g in GR)GR[g].forEach(v=>{GRP[v]=g;});
+const GK=Object.keys(GL);let kinds=["reg","ess"];
+function paintK(){[...$("kinds").children].forEach((b,k)=>{const on=kinds.includes(GK[k]);b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on));});}
+GK.forEach(g=>{
+  const b=document.createElement("button");b.textContent=GL[g];
+  b.onclick=()=>{const on=kinds.includes(g);if(on&&kinds.length===1)return;kinds=on?kinds.filter(x=>x!==g):kinds.concat(g);paintK();};
+  $("kinds").appendChild(b);
+});
+paintK();
+
+let cur="setup";
+function view(){
+  const t=location.hash==="#tables";
+  ["setup","quiz","done"].forEach(s=>$(s).hidden=t||s!==cur);
+  $("tables").hidden=!t;$("sub").hidden=t;document.querySelector("main").classList.toggle("wide",t);
+  if(t)buildTable();
+  window.scrollTo(0,0);
+}
+function show(id){cur=id;view();}
+
+function seg(id,fn){
+  const bs=document.querySelectorAll("#"+id+" button");
+  bs.forEach(b=>b.onclick=()=>{
+    fn(b.dataset.v);
+    bs.forEach(x=>{
+      x.classList.toggle("on",x===b);
+      x.setAttribute("aria-pressed",String(x===b));
+    });
+  });
+}
+seg("seg",v=>{n=+v;});
+
+function start(){
+  const vos=$("vos").checked,syn=$("syn").checked,pool=[];
+  for(const v in D){
+    if(!kinds.includes(GRP[v]))continue;
+    D[v].forEach((s,t)=>{
+      if(syn&&(t===4||t===5))return;
+      s.split(" ").forEach((f,p)=>{
+        if(p===4&&!vos)return;
+        pool.push({v,t,p,a:f.split("/"),r:REG.includes(v)});
+      });
+    });
+  }
+  for(let k=pool.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[pool[k],pool[j]]=[pool[j],pool[k]];}
+  q=pool.slice(0,n);i=0;score=0;miss=[];
+  const ord=shuf(["ar","er","ir"]),bank={ar:shuf(REGV.ar),er:shuf(REGV.er),ir:shuf(REGV.ir)};
+  const R=q.filter(x=>x.r),cl=shuf(R.map((_,k)=>ord[k%3]));
+  R.forEach((x,k)=>{const w=bank[cl[k]].pop();x.v=w;x.a=conj(w)[x.t].split(" ")[x.p].split("/");});
+  show("quiz");render();
+}
+
+function render(){
+  const c=q[i];phase="ask";
+  $("prog").textContent="Pergunta "+(i+1)+" de "+q.length;
+  $("score").textContent="Pontos "+score;
+  $("fill").style.width=(i/q.length*100)+"%";
+  $("verb").textContent=c.v;
+  $("tense").textContent=T[c.t];
+  $("tense").className="tense"+(c.t>5?" sj":"");
+  $("who").textContent=P[c.p][0]+" ("+P[c.p][1]+")";
+  [...$("pgrid").children].forEach((d,k)=>d.classList.toggle("on",k===(c.p%3)*2+(c.p>=3?1:0)));
+  const a=$("ans");a.value="";a.readOnly=false;a.className="";
+  $("fb").hidden=true;$("go").textContent="Verificar";
+  a.focus();
+}
+
+function go(){
+  if(phase==="ask"){
+    const a=$("ans"),c=q[i],g=norm(a.value);
+    if(!g)return;
+    const ok=c.a.some(x=>norm(x)===g),inf=ok?"":info(g);
+    if(ok)score++;else miss.push({c:c,g:a.value.trim(),inf:inf});
+    a.readOnly=true;a.className=ok?"ok":"bad";
+    const fb=$("fb");fb.hidden=false;fb.className="fb "+(ok?"ok":"bad");
+    const others=c.a.filter(x=>norm(x)!==g);
+    fb.textContent=ok?"Correto"+(others.length?" (também aceite: "+others.join(", ")+")":""):"Resposta: "+c.a.join(" ou ")+(inf?"\n“"+a.value.trim()+"” é uma forma válida de: "+inf:"");
+    $("score").textContent="Pontos "+score;
+    $("fill").style.width=((i+1)/q.length*100)+"%";
+    $("go").textContent=i===q.length-1?"Ver resultados":"Seguinte";
+    phase="review";
+  }else{
+    i++;
+    if(i<q.length)render();else finish();
+  }
+}
+
+function finish(){
+  show("done");
+  $("res").textContent=score+" / "+q.length;
+  $("pct").textContent=Math.round(score/q.length*100)+"% corretas"+(miss.length?"":", sem erros");
+  $("misshead").hidden=!miss.length;
+  const L=$("miss");L.textContent="";
+  miss.forEach(m=>{
+    const li=document.createElement("li"),c=m.c;
+    li.textContent=c.v+", "+T[c.t].toLowerCase()+", "+P[c.p][0]+": escreveste “"+m.g+"”"+(m.inf?" ("+m.inf+")":"")+"; resposta: "+c.a.join(" ou ");
+    L.appendChild(li);
+  });
+}
+
+$("start").onclick=start;
+$("go").onclick=go;
+$("again").onclick=start;
+$("change").onclick=()=>show("setup");
+$("ans").addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.isComposing){e.preventDefault();if(!e.repeat)go();}
+});
+
+const E={
+cantar:["canto cantas canta cantamos cantáis cantan","canté cantaste cantó cantamos cantasteis cantaron","cantaba cantabas cantaba cantábamos cantabais cantaban","cante cantes cante cantemos cantéis canten","cantara cantaras cantara cantáramos cantarais cantaran","cantar","cantado"],
+comer:["como comes come comemos coméis comen","comí comiste comió comimos comisteis comieron","comía comías comía comíamos comíais comían","coma comas coma comamos comáis coman","comiera comieras comiera comiéramos comierais comieran","comer","comido"],
+abrir:["abro abres abre abrimos abrís abren","abrí abriste abrió abrimos abristeis abrieron","abría abrías abría abríamos abríais abrían","abra abras abra abramos abráis abran","abriera abrieras abriera abriéramos abrierais abrieran","abrir","abierto"],
+ser:["soy eres es somos sois son","fui fuiste fue fuimos fuisteis fueron","era eras era éramos erais eran","sea seas sea seamos seáis sean","fuera fueras fuera fuéramos fuerais fueran","ser","sido"],
+estar:["estoy estás está estamos estáis están","estuve estuviste estuvo estuvimos estuvisteis estuvieron","estaba estabas estaba estábamos estabais estaban","esté estés esté estemos estéis estén","estuviera estuvieras estuviera estuviéramos estuvierais estuvieran","estar","estado"],
+ter:["tengo tienes tiene tenemos tenéis tienen","tuve tuviste tuvo tuvimos tuvisteis tuvieron","tenía tenías tenía teníamos teníais tenían","tenga tengas tenga tengamos tengáis tengan","tuviera tuvieras tuviera tuviéramos tuvierais tuvieran","tendr","tenido"],
+haver:["he has ha hemos habéis han","hube hubiste hubo hubimos hubisteis hubieron","había habías había habíamos habíais habían","haya hayas haya hayamos hayáis hayan","hubiera hubieras hubiera hubiéramos hubierais hubieran","habr","habido"],
+"pôr":["pongo pones pone ponemos ponéis ponen","puse pusiste puso pusimos pusisteis pusieron","ponía ponías ponía poníamos poníais ponían","ponga pongas ponga pongamos pongáis pongan","pusiera pusieras pusiera pusiéramos pusierais pusieran","pondr","puesto"],
+ir:["voy vas va vamos vais van","fui fuiste fue fuimos fuisteis fueron","iba ibas iba íbamos ibais iban","vaya vayas vaya vayamos vayáis vayan","fuera fueras fuera fuéramos fuerais fueran","ir","ido"],
+"fazer":["hago haces hace hacemos hacéis hacen", "hice hiciste hizo hicimos hicisteis hicieron", "hacía hacías hacía hacíamos hacíais hacían", "haga hagas haga hagamos hagáis hagan", "hiciera hicieras hiciera hiciéramos hicierais hicieran", "har", "hecho"],
+"dizer":["digo dices dice decimos decís dicen", "dije dijiste dijo dijimos dijisteis dijeron", "decía decías decía decíamos decíais decían", "diga digas diga digamos digáis digan", "dijera dijeras dijera dijéramos dijerais dijeran", "dir", "dicho"],
+"dar":["doy das da damos dais dan", "di diste dio dimos disteis dieron", "daba dabas daba dábamos dabais daban", "dé des dé demos deis den", "diera dieras diera diéramos dierais dieran", "dar", "dado"],
+"ver":["veo ves ve vemos veis ven", "vi viste vio vimos visteis vieron", "veía veías veía veíamos veíais veían", "vea veas vea veamos veáis vean", "viera vieras viera viéramos vierais vieran", "ver", "visto"],
+"vir":["vengo vienes viene venimos venís vienen", "vine viniste vino vinimos vinisteis vinieron", "venía venías venía veníamos veníais venían", "venga vengas venga vengamos vengáis vengan", "viniera vinieras viniera viniéramos vinierais vinieran", "vendr", "venido"],
+"poder":["puedo puedes puede podemos podéis pueden", "pude pudiste pudo pudimos pudisteis pudieron", "podía podías podía podíamos podíais podían", "pueda puedas pueda podamos podáis puedan", "pudiera pudieras pudiera pudiéramos pudierais pudieran", "podr", "podido"],
+"querer":["quiero quieres quiere queremos queréis quieren", "quise quisiste quiso quisimos quisisteis quisieron", "quería querías quería queríamos queríais querían", "quiera quieras quiera queramos queráis quieran", "quisiera quisieras quisiera quisiéramos quisierais quisieran", "querr", "querido"],
+"saber":["sé sabes sabe sabemos sabéis saben", "supe supiste supo supimos supisteis supieron", "sabía sabías sabía sabíamos sabíais sabían", "sepa sepas sepa sepamos sepáis sepan", "supiera supieras supiera supiéramos supierais supieran", "sabr", "sabido"],
+"trazer":["traigo traes trae traemos traéis traen", "traje trajiste trajo trajimos trajisteis trajeron", "traía traías traía traíamos traíais traían", "traiga traigas traiga traigamos traigáis traigan", "trajera trajeras trajera trajéramos trajerais trajeran", "traer", "traído"],
+"ler":["leo lees lee leemos leéis leen", "leí leíste leyó leímos leísteis leyeron", "leía leías leía leíamos leíais leían", "lea leas lea leamos leáis lean", "leyera leyeras leyera leyéramos leyerais leyeran", "leer", "leído"],
+"sair":["salgo sales sale salimos salís salen", "salí saliste salió salimos salisteis salieron", "salía salías salía salíamos salíais salían", "salga salgas salga salgamos salgáis salgan", "saliera salieras saliera saliéramos salierais salieran", "saldr", "salido"],
+"ouvir":["oigo oyes oye oímos oís oyen", "oí oíste oyó oímos oísteis oyeron", "oía oías oía oíamos oíais oían", "oiga oigas oiga oigamos oigáis oigan", "oyera oyeras oyera oyéramos oyerais oyeran", "oir", "oído"],
+"pedir":["pido pides pide pedimos pedís piden", "pedí pediste pidió pedimos pedisteis pidieron", "pedía pedías pedía pedíamos pedíais pedían", "pida pidas pida pidamos pidáis pidan", "pidiera pidieras pidiera pidiéramos pidierais pidieran", "pedir", "pedido"],
+"dormir":["duermo duermes duerme dormimos dormís duermen", "dormí dormiste durmió dormimos dormisteis durmieron", "dormía dormías dormía dormíamos dormíais dormían", "duerma duermas duerma durmamos durmáis duerman", "durmiera durmieras durmiera durmiéramos durmierais durmieran", "dormir", "dormido"]
+};
+const XI={"ter": "tener", "haver": "haber", "pôr": "poner", "fazer": "hacer", "dizer": "decir", "vir": "venir", "trazer": "traer", "ler": "leer", "sair": "salir", "ouvir": "oír"};
+const AUX="había habías había habíamos habíais habían".split(" ");
+const FU="é ás á emos éis án".split(" "),CO="ía ías ía íamos íais ían".split(" ");
+const seRa=w=>w.replace(/ramos$/,"semos").replace(/rais$/,"seis").replace(/ras$/,"ses").replace(/ran$/,"sen").replace(/ra$/,"se");
+const reRa=w=>w.replace(/ramos$/,"remos").replace(/rais$/,"reis").replace(/ras$/,"res").replace(/ran$/,"ren").replace(/ra$/,"re");
+const es=(v,t)=>{
+  const e=E[v];
+  if(t===8)return e[4].split(" ").map(reRa);
+  if(t===3)return AUX.map(a=>a+" "+e[6]);
+  if(t===4)return FU.map(x=>e[5]+x);
+  if(t===5)return CO.map(x=>e[5]+x);
+  const s=e[{0:0,1:1,2:2,6:3,7:4}[t]].split(" ");
+  return t===7?s.map(w=>w+" / "+seRa(w)):s;
+};
+const REFI={"pôr":"poer"};
+const dac=x=>x.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+function cls(f,r,b){
+  const n=f.length,m=r.length,bf=dac(f),br=dac(r),c=Array(n).fill(""),R={c:c,tail:false};
+  if(f===r)return R;
+  let p=0;while(p<n&&p<m&&bf[p]===br[p])p++;
+  let s=0;while(s<n-p&&s<m-p&&bf[n-1-s]===br[m-1-s])s++;
+  for(let i=0;i<p;i++)if(f[i]!==r[i])c[i]="ac";
+  for(let j=0;j<s;j++)if(f[n-1-j]!==r[m-1-j])c[n-1-j]="ac";
+  const mid=n-p-s;
+  if(mid<=0){if(n>=m)return R;if(p<b){if(n)c[Math.min(p,n-1)]="st";}else R.tail=true;return R;}
+  const e=(s===0&&s<m-b&&/[aeiouáéíóúâêôãõàü]/.test(f[n-1]))?1:0;
+  for(let i=p;i<n-s;i++)c[i]=i>=n-s-e?"en":"st";
+  return R;
+}
+const ESE={
+ar:["o as a amos áis an","é aste ó amos asteis aron","aba abas aba ábamos abais aban",0,0,0,"e es e emos éis en","ara aras ara áramos arais aran"],
+er:["o es e emos éis en","í iste ió imos isteis ieron","ía ías ía íamos íais ían",0,0,0,"a as a amos áis an","iera ieras iera iéramos ierais ieran"],
+ir:["o es e imos ís en","í iste ió imos isteis ieron","ía ías ía íamos íais ían",0,0,0,"a as a amos áis an","iera ieras iera iéramos ierais ieran"]
+};
+function esReg(inf,t){
+  const k=dac(inf).slice(-2),s=inf.slice(0,-2);
+  if(t===3)return AUX.map(a=>a+" "+s+(k==="ar"?"ado":"ido"));
+  if(t===4)return FU.map(x=>inf+x);
+  if(t===5)return CO.map(x=>inf+x);
+  if(t===8)return esReg(inf,7).map(w=>reRa(w.split(" / ")[0]));
+  const w=ESE[k][t].split(" ").map(x=>s+x);
+  return t===7?w.map(x=>x+" / "+seRa(x)):w;
+}
+function mark(td,txt,v,t,p,lang){
+  if(GRP[v]==="reg"){td.textContent=txt;return;}
+  const parts=txt.split(" / ");
+  let refs,inf;
+  if(lang==="pt"){inf=REFI[v]||v;refs=[conj(inf)[t].split(" ")[p].split("/")[0]];}
+  else{inf=XI[v]||v;refs=esReg(inf,t)[p].split(" / ");}
+  parts.forEach((f,k)=>{
+    if(k)td.appendChild(document.createTextNode(" / "));
+    if(k>=refs.length){td.appendChild(document.createTextNode(f));return;}
+    const r=refs[k];
+    const b=t===3&&lang==="es"?r.indexOf(" ")+1+inf.length-2:(t===4||t===5||(t===8&&lang==="pt")?inf.length:inf.length-2);
+    const R=cls(f,r,b);let i=0;
+    while(i<f.length){
+      let j=i;while(j<f.length&&R.c[j]===R.c[i])j++;
+      const seg=f.slice(i,j);
+      if(R.c[i]){const sp=document.createElement("span");sp.className="u "+R.c[i];sp.textContent=seg;td.appendChild(sp);}
+      else td.appendChild(document.createTextNode(seg));
+      i=j;
+    }
+    if(R.tail){const sp=document.createElement("span");sp.className="u en";sp.textContent="\u2002";td.appendChild(sp);}
+  });
+}
+let sel=["cantar"];
+function buildTable(){
+  const keys=Object.keys(D),c=$("vchips");
+  if(!c.children.length)keys.forEach((v,k)=>{
+    if(k===0||GRP[v]!==GRP[keys[k-1]]){const l=document.createElement("span");l.className="gl";l.textContent=GL[GRP[v]];c.appendChild(l);}
+    const b=document.createElement("button");
+    b.textContent=v+(XI[v]?" / "+XI[v]:"");
+    b.onclick=()=>{
+      if(sel.includes(v)){if(sel.length>1)sel=sel.filter(x=>x!==v);}else sel.push(v);
+      buildTable();
+    };
+    c.appendChild(b);
+  });
+  const bs=c.querySelectorAll("button");
+  keys.forEach((v,k)=>{
+    const on=sel.includes(v);
+    bs[k].classList.toggle("on",on);
+    bs[k].setAttribute("aria-pressed",String(on));
+  });
+  const vs=keys.filter(v=>sel.includes(v)),tab=$("tbl");
+  tab.textContent="";tab.style.minWidth=(70+vs.length*280)+"px";
+  const th=(r,txt,cls,span)=>{
+    const x=document.createElement("th");x.textContent=txt;
+    if(cls)x.className=cls;if(span)x.colSpan=span;r.appendChild(x);
+  };
+  const h=tab.createTHead(),r1=h.insertRow(),r2=h.insertRow();
+  th(r1,"");th(r2,"");
+  vs.forEach(v=>{
+    th(r1,v+(XI[v]?" / "+XI[v]:""),"vh",2);
+    th(r2,"PE","pt");th(r2,"ES","es");
+  });
+  const tb=tab.createTBody();
+  T.forEach((name,ti)=>{
+    const g=tb.insertRow();g.className="tg"+(ti>5?" sj":"");
+    const gc=g.insertCell();gc.colSpan=1+vs.length*2;
+    const sp=document.createElement("span");sp.className="tl";sp.textContent=name;gc.appendChild(sp);
+    const cols=vs.map(v=>[D[v][ti].split(" "),es(v,ti),v]);
+    for(let p=0;p<6;p++){
+      const r=tb.insertRow();
+      r.insertCell().textContent=P[p][1];
+      cols.forEach(cc=>{
+        const a=r.insertCell();a.className="pt";mark(a,cc[0][p].replace("/"," / "),cc[2],ti,p,"pt");
+        const b=r.insertCell();b.className="es";mark(b,cc[1][p],cc[2],ti,p,"es");
+      });
+    }
+  });
+}
+window.addEventListener("hashchange",view);
+view();
+</script>
+</body>
+</html>
